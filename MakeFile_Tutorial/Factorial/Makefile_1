@@ -1,0 +1,22 @@
+PHONY = all clean
+
+CC = gcc                        # compiler to use
+LINKERFLAG = -lm
+INCLUDE = -I.
+
+SRCS := $(wildcard *.c)
+BINS := $(SRCS:%.c=%)
+
+all: ${BINS}
+
+%: %.o
+	@echo "Checking.."
+	${CC} ${INCLUDE} ${LINKERFLAG} $< -o $@
+
+%.o: %.c
+	@echo "Creating object.."
+	${CC} ${INCLUDE} -c $<
+
+clean: 
+	@echo "Cleaning up..."
+	rm -rvf *.o ${BINS}
